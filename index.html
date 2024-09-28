@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaskaran Singh - Portfolio</title>
+    <title>Jaskaran Singh - Tools</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .tool-section {
+            margin-bottom: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
+        <h1>Welcome to My Tool Hub</h1>
         <nav>
             <ul>
                 <li><a href="about.html">About Me</a></li>
@@ -19,16 +36,101 @@
             </ul>
         </nav>
     </header>
+
     <main>
-        <section>
-            <h2>Hello! I'm Jaskaran Singh.</h2>
-            <p>A blind BCA student and Android developer passionate about coding and accessibility.</p>
+        <!-- Calculator Tool -->
+        <section class="tool-section">
+            <h2>Calculator</h2>
+            <input type="text" id="calc-display" readonly><br>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('+')">+</button><br>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('-')">-</button><br>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('*')">*</button><br>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendValue('/')">/</button>
+        </section>
+
+        <!-- Password Generator Tool -->
+        <section class="tool-section">
+            <h2>Password Generator</h2>
+            <label for="pass-length">Password Length:</label>
+            <input type="number" id="pass-length" min="1" max="20" value="12">
+            <button onclick="generatePassword()">Generate Password</button><br>
+            <input type="text" id="password-output" readonly>
+        </section>
+
+        <!-- String Encryption/Decryption Tool -->
+        <section class="tool-section">
+            <h2>String Encryption Tool</h2>
+            <textarea id="input-string" rows="4" cols="50" placeholder="Enter string to encrypt"></textarea><br>
+            <button onclick="encryptString()">Encrypt</button>
+            <button onclick="decryptString()">Decrypt</button><br>
+            <input type="text" id="encryption-output" readonly>
         </section>
     </main>
+
     <footer>
         <p>&copy; 2024 Jaskaran Singh. All rights reserved.</p>
     </footer>
-    <script src="js/scripts.js"></script>
+
+    <script>
+        // Calculator Functions
+        function appendValue(value) {
+            document.getElementById('calc-display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('calc-display').value = '';
+        }
+
+        function calculate() {
+            try {
+                let result = eval(document.getElementById('calc-display').value);
+                document.getElementById('calc-display').value = result;
+            } catch (error) {
+                alert("Invalid Expression");
+            }
+        }
+
+        // Password Generator Function
+        function generatePassword() {
+            const length = document.getElementById('pass-length').value;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            document.getElementById('password-output').value = password;
+        }
+
+        // String Encryption/Decryption Functions (Base64 Encoding/Decoding)
+        function encryptString() {
+            const inputString = document.getElementById('input-string').value;
+            const encrypted = btoa(inputString); // Base64 encode
+            document.getElementById('encryption-output').value = encrypted;
+        }
+
+        function decryptString() {
+            const encryptedString = document.getElementById('encryption-output').value;
+            try {
+                const decrypted = atob(encryptedString); // Base64 decode
+                document.getElementById('input-string').value = decrypted;
+            } catch (error) {
+                alert("Invalid Encrypted String");
+            }
+        }
+    </script>
 </body>
 </html>
 
